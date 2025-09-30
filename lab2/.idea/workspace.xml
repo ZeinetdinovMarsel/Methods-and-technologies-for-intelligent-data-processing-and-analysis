@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a2c52a1d-02a0-4221-8e58-5371300b5dd1" name="Changes" comment="" />
+    <list default="true" id="a2c52a1d-02a0-4221-8e58-5371300b5dd1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,8 +40,8 @@
   "keyToString": {
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "dev",
-    "last_opened_file_path": "E:/Учблёба/Лабы/1 семак/ИИ/Methods-and-technologies-for-intelligent-data-processing-and-analysis/lab2",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "E:/Учблёба/Лабы/1 семак/ИИ/Methods-and-technologies-for-intelligent-data-processing-and-analysis",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
