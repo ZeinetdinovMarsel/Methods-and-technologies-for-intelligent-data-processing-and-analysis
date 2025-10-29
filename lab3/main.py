@@ -4,302 +4,244 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.neighbors import KNeighborsRegressor
-from sklearn.model_selection import cross_validate, KFold
-from sklearn.metrics import (
-    mean_squared_error, mean_absolute_error, r2_score,
-    explained_variance_score
-)
+from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score, explained_variance_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
 import matplotlib.pyplot as plt
+import warnings
+import time
 
-def load_and_preprocess_data():
-    bottle_data = pd.read_csv('bottle.csv',low_memory=False)
-    cast_data = pd.read_csv('cast.csv',low_memory=False)
-
-    print(f"Размер bottle dataset: {bottle_data.shape}")
-    print(f"Размер cast dataset: {cast_data.shape}")
-
-    merged_data = bottle_data.merge(cast_data, on='Cst_Cnt', how='left', suffixes=('_bottle', '_cast'))
-
-    print(f"Размер объединенного dataset: {merged_data.shape}")
-
-    return merged_data
+warnings.filterwarnings('ignore')
 
 
-def prepare_regression_data(data, target_column='T_degC'):
+class RegressionAnalyzer:
+    def __init__(self):
+        self.results = {}
+        self.models = {
+            'LinearRegression': LinearRegression(),
+            'Ridge': Ridge(alpha=1.0),
+            'Lasso': Lasso(alpha=0.1),
+            'RandomForest': RandomForestRegressor(
+                n_estimators=50,
+                max_depth=7,
+                min_samples_split=50,
+                random_state=42,
+                n_jobs=-1
+            ),
+            'DecisionTree': DecisionTreeRegressor(max_depth=7, random_state=42),
+            'KNeighbors': KNeighborsRegressor(n_neighbors=5)
+        }
 
-    numeric_columns = data.select_dtypes(include=[np.number]).columns.tolist()
-    missing_threshold = 0.1
-    missing_ratio = data[numeric_columns].isnull().mean()
-    valid_columns = missing_ratio[missing_ratio < missing_threshold].index.tolist()
+    def load_data(self):
 
-    if target_column not in valid_columns:
-        print(f"Целевая переменная {target_column} отсутствует или имеет много пропусков")
-        potential_targets = ['Salnty', 'O2ml_L', 'STheta', 'O2Sat']
-        for pt in potential_targets:
-            if pt in numeric_columns and missing_ratio[pt] < missing_threshold:
-                target_column = pt
-                print(f"Используем альтернативную целевую переменную: {target_column}")
-                break
+        bottle_data = pd.read_csv('bottle.csv', low_memory=False, nrows=500000)
+        cast_data = pd.read_csv('cast.csv', low_memory=False)
 
-    if target_column not in valid_columns:
-        print("Не удалось найти подходящую целевую переменную")
-        return None, None, None, None
+        print(f"Загружено строк из bottle: {bottle_data.shape[0]}")
+        print(f"Загружено строк из cast: {cast_data.shape[0]}")
 
-    if target_column in valid_columns:
-        valid_columns.remove(target_column)
+        merged_data = bottle_data.merge(cast_data, on='Cst_Cnt', how='left', suffixes=('_bottle', '_cast'))
+        print(f"Объединенный датасет: {merged_data.shape}")
 
-    features = valid_columns[:20]
+        return merged_data
 
-    print(f"Целевая переменная: {target_column}")
-    print(f"Количество признаков: {len(features)}")
-    print(f"Признаки: {features}")
+    def prepare_features(self, data, target_column='T_degC'):
+        if target_column not in data.columns:
+            return None, None, None, None
 
-    X = data[features].copy()
-    y = data[target_column].copy()
-    valid_indices = y.notna()
-    X = X[valid_indices]
-    y = y[valid_indices]
+        potential_leakage_columns = []
+        for col in data.columns:
+            if col.endswith('_bottle') and target_column in col:
+                potential_leakage_columns.append(col)
+            if col in ['R_TEMP', 'R_POTEMP']:
+                potential_leakage_columns.append(col)
 
-    imputer = SimpleImputer(strategy='median')
-    X_imputed = imputer.fit_transform(X)
-    X = pd.DataFrame(X_imputed, columns=X.columns, index=X.index)
+        potential_leakage_columns = [col for col in potential_leakage_columns if col != target_column]
+        features_df = data.drop(columns=potential_leakage_columns, errors='ignore')
 
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
-    X = pd.DataFrame(X_scaled, columns=X.columns, index=X.index)
+        numeric_data = features_df.select_dtypes(include=[np.number])
+        features = numeric_data.drop(columns=[target_column], errors='ignore')
 
-    split_ratio = 0.7
-    split_index = int(len(X) * split_ratio)
+        valid_mask = data[target_column].notna()
+        features = features[valid_mask]
+        target = data.loc[valid_mask, target_column]
 
-    X_train = X.iloc[:split_index]
-    X_test = X.iloc[split_index:]
-    y_train = y.iloc[:split_index]
-    y_test = y.iloc[split_index:]
+        non_empty_features = features.columns[features.notna().any()].tolist()
+        features = features[non_empty_features]
 
-    print(f"Размер обучающей выборки: {X_train.shape}")
-    print(f"Размер тестовой выборки: {X_test.shape}")
-
-    return X_train, X_test, y_train, y_test, target_column
-
-
-def analyze_regression_performance(y_true, y_pred, model_name):
-    metrics = {
-        'MSE': mean_squared_error(y_true, y_pred),
-        'RMSE': np.sqrt(mean_squared_error(y_true, y_pred)),
-        'MAE': mean_absolute_error(y_true, y_pred),
-        'R2': r2_score(y_true, y_pred),
-        'Explained Variance': explained_variance_score(y_true, y_pred)
-    }
-
-    print(f"\n{model_name} - Метрики:")
-    for metric, value in metrics.items():
-        print(f"{metric}: {value:.4f}")
-
-    plt.figure(figsize=(10, 6))
-
-    plt.subplot(1, 2, 1)
-    plt.scatter(y_true, y_pred, alpha=0.5)
-    plt.plot([y_true.min(), y_true.max()], [y_true.min(), y_true.max()], 'r--', lw=2)
-    plt.xlabel('Истинные значения')
-    plt.ylabel('Предсказанные значения')
-    plt.title(f'{model_name}\nПредсказания vs Истинные значения')
-
-    plt.subplot(1, 2, 2)
-    residuals = y_true - y_pred
-    plt.scatter(y_pred, residuals, alpha=0.5)
-    plt.axhline(y=0, color='r', linestyle='--')
-    plt.xlabel('Предсказанные значения')
-    plt.ylabel('Остатки')
-    plt.title('Остатки регрессии')
-
-    plt.tight_layout()
-    plt.show()
-
-    return metrics
-
-
-def perform_depth_analysis(data, models, target_column='T_degC'):
-    if 'Depthm' not in data.columns:
-        print("Столбец 'Depthm' не найден для анализа по глубине")
-        return
-
-    data['depth_category'] = pd.cut(data['Depthm'],
-                                    bins=[0, 50, 200, 500, 1000, 5000],
-                                    labels=['0-50m', '50-200m', '200-500m', '500-1000m', '1000m+'])
-
-    depth_results = []
-
-    for depth_cat in data['depth_category'].cat.categories:
-        depth_data = data[data['depth_category'] == depth_cat]
-
-        if len(depth_data) < 50:
-            continue
-
-        X_depth = depth_data.select_dtypes(include=[np.number]).drop(columns=[target_column, 'Depthm'], errors='ignore')
-        y_depth = depth_data[target_column]
+        if target_column in features.columns:
+            features = features.drop(columns=[target_column])
 
         imputer = SimpleImputer(strategy='median')
-        X_depth = pd.DataFrame(imputer.fit_transform(X_depth), columns=X_depth.columns)
+        features_imputed = imputer.fit_transform(features)
+        features_imputed = pd.DataFrame(features_imputed, columns=features.columns)
 
         scaler = StandardScaler()
-        X_depth = pd.DataFrame(scaler.fit_transform(X_depth), columns=X_depth.columns)
+        features_scaled = scaler.fit_transform(features_imputed)
+        features_final = pd.DataFrame(features_scaled, columns=features.columns)
 
-        valid_indices = y_depth.notna()
-        X_depth = X_depth[valid_indices]
-        y_depth = y_depth[valid_indices]
+        X_train, X_test, y_train, y_test = train_test_split(
+            features_final, target, test_size=0.3, random_state=42, shuffle=True
+        )
 
-        if len(X_depth) < 20:
-            continue
+        print(f"Обучающая выборка: {X_train.shape}")
+        print(f"Тестовая выборка: {X_test.shape}")
 
-        for model in models:
-            model_name = model.__class__.__name__
+        return X_train, X_test, y_train, y_test
 
-            try:
-                cv = KFold(n_splits=min(5, len(X_depth)), shuffle=True, random_state=42)
-                cv_scores = cross_validate(model, X_depth, y_depth, cv=cv,
-                                           scoring=['neg_mean_squared_error', 'r2'],
-                                           n_jobs=-1)
+    def evaluate_model(self, model, X_train, X_test, y_train, y_test, model_name):
+        start_time = time.time()
 
-                depth_results.append({
-                    'depth_category': depth_cat,
-                    'model': model_name,
-                    'RMSE': np.sqrt(-cv_scores['test_neg_mean_squared_error'].mean()),
-                    'R2': cv_scores['test_r2'].mean(),
-                    'samples': len(X_depth)
-                })
+        try:
+            model.fit(X_train, y_train)
+            train_time = time.time() - start_time
 
-            except Exception as e:
-                print(f"Ошибка при анализе глубины {depth_cat} для модели {model_name}: {e}")
+            y_pred = model.predict(X_test)
 
-    if depth_results:
-        depth_df = pd.DataFrame(depth_results)
-        print("\nАнализ производительности по глубинам:")
-        print(depth_df.pivot_table(index='depth_category', columns='model', values='R2'))
+            metrics = {
+                'MSE': mean_squared_error(y_test, y_pred),
+                'RMSE': np.sqrt(mean_squared_error(y_test, y_pred)),
+                'MAE': mean_absolute_error(y_test, y_pred),
+                'R2': r2_score(y_test, y_pred),
+                'Explained_Variance': explained_variance_score(y_test, y_pred),
+                'Train_Time': train_time
+            }
 
-        plt.figure(figsize=(12, 6))
-        for model in depth_df['model'].unique():
-            model_data = depth_df[depth_df['model'] == model]
-            plt.plot(model_data['depth_category'], model_data['R2'], marker='o', label=model)
+            cv_scores = cross_val_score(model, X_train, y_train, cv=5, scoring='r2')
+            metrics['CV_R2_Mean'] = cv_scores.mean()
+            metrics['CV_R2_Std'] = cv_scores.std()
 
-        plt.xlabel('Категория глубины')
-        plt.ylabel('R² Score')
-        plt.title('Производительность моделей по глубинам')
-        plt.legend()
-        plt.xticks(rotation=45)
+            self.results[model_name] = metrics
+
+            print(f"\n{model_name}:")
+            print(f"R²: {metrics['R2']:.4f} | RMSE: {metrics['RMSE']:.4f}")
+            print(f"Время обучения: {metrics['Train_Time']:.2f}с")
+            print(f"Кросс-валидация R²: {metrics['CV_R2_Mean']:.4f} (±{metrics['CV_R2_Std']:.4f})")
+
+            return metrics, y_pred
+
+        except Exception as e:
+            print(f"Ошибка в {model_name}: {str(e)}")
+            return None, None
+
+    def plot_predictions(self, y_true, y_pred, model_name):
+        plt.figure(figsize=(12, 4))
+
+        plt.subplot(1, 2, 1)
+        plt.scatter(y_true, y_pred, alpha=0.5, s=20)
+        min_val = min(y_true.min(), y_pred.min())
+        max_val = max(y_true.max(), y_pred.max())
+        plt.plot([min_val, max_val], [min_val, max_val], 'r--', lw=2)
+        plt.xlabel('Истинные значения')
+        plt.ylabel('Предсказания')
+        plt.title(f'{model_name}\nПредсказания vs Истинные значения')
+
+        plt.subplot(1, 2, 2)
+        residuals = y_true - y_pred
+        plt.scatter(y_pred, residuals, alpha=0.5, s=20)
+        plt.axhline(y=0, color='r', linestyle='--')
+        plt.xlabel('Предсказания')
+        plt.ylabel('Остатки')
+        plt.title('Диаграмма остатков')
+
         plt.tight_layout()
         plt.show()
 
+    def plot_feature_importance(self, model, feature_names, model_name, top_n=10):
+        if hasattr(model, 'feature_importances_'):
+            importances = model.feature_importances_
+            indices = np.argsort(importances)[-top_n:]
+
+            plt.figure(figsize=(10, 6))
+            plt.barh(range(len(indices)), importances[indices])
+            plt.yticks(range(len(indices)), [feature_names[i] for i in indices])
+            plt.xlabel('Важность признака')
+            plt.title(f'Топ-{top_n} важных признаков: {model_name}')
+            plt.tight_layout()
+            plt.show()
+
+    def compare_models(self):
+        if not self.results:
+            return
+
+        results_df = pd.DataFrame(self.results).T
+        results_df = results_df.sort_values('R2', ascending=False)
+
+        print("СРАВНЕНИЕ МОДЕЛЕЙ")
+
+        for model_name in results_df.index:
+            row = results_df.loc[model_name]
+            print(f"{model_name:15} | R²: {row['R2']:.4f} | RMSE: {row['RMSE']:.4f} | Время: {row['Train_Time']:.2f}с")
+
+        plt.figure(figsize=(15, 10))
+
+        plt.subplot(2, 2, 1)
+        results_df['R2'].sort_values().plot(kind='barh', color='skyblue')
+        plt.title('Сравнение R² score')
+        plt.xlabel('R²')
+
+        plt.subplot(2, 2, 2)
+        results_df['RMSE'].sort_values(ascending=False).plot(kind='barh', color='lightcoral')
+        plt.title('Сравнение RMSE')
+        plt.xlabel('RMSE')
+
+        plt.subplot(2, 2, 3)
+        results_df['Train_Time'].sort_values().plot(kind='barh', color='lightgreen')
+        plt.title('Время обучения моделей')
+        plt.xlabel('Время (секунды)')
+
+        plt.subplot(2, 2, 4)
+        results_df['CV_R2_Mean'].sort_values().plot(kind='barh', color='gold')
+        plt.title('R² кросс-валидации')
+        plt.xlabel('R²')
+
+        plt.tight_layout()
+        plt.show()
+
+        return results_df
+
 
 def main():
-    print("Загрузка данных CalCOFI...")
-    data = load_and_preprocess_data()
+    analyzer = RegressionAnalyzer()
+
+    print("Загрузка данных CalCOFI")
+    data = analyzer.load_data()
 
     if data is None:
         return
 
-    print("\nПодготовка данных для регрессии...")
-    X_train, X_test, y_train, y_test, target_column = prepare_regression_data(data)
+    print("\nПодготовка данных")
+    X_train, X_test, y_train, y_test = analyzer.prepare_features(data)
 
     if X_train is None:
         return
 
-    models = [
-        LinearRegression(),
-        Ridge(alpha=1.0),
-        Lasso(alpha=0.1),
-        RandomForestRegressor(n_estimators=100, random_state=42, n_jobs=-1),
-        GradientBoostingRegressor(n_estimators=100, random_state=42),
-        DecisionTreeRegressor(max_depth=10, random_state=42),
-        KNeighborsRegressor(n_neighbors=5)
-    ]
+    print("\nОбучение и оценка моделей:")
 
-    results_summary = []
+    for model_name, model in analyzer.models.items():
+        metrics, y_pred = analyzer.evaluate_model(
+            model, X_train, X_test, y_train, y_test, model_name
+        )
 
-    print("\nОбучение и оценка моделей регрессии...")
+        if metrics is not None and y_pred is not None:
+            analyzer.plot_predictions(y_test.values, y_pred, model_name)
 
-    for model in models:
-        model_name = model.__class__.__name__
-        print(f"Модель: {model_name}")
+            if hasattr(model, 'feature_importances_'):
+                analyzer.plot_feature_importance(
+                    model, X_train.columns.tolist(), model_name
+                )
 
-        try:
-            cv = KFold(n_splits=5, shuffle=True, random_state=42)
-            cv_scores = cross_validate(model, X_train, y_train, cv=cv,
-                                       scoring=['neg_mean_squared_error', 'neg_mean_absolute_error', 'r2'],
-                                       n_jobs=-1, return_train_score=False)
+    results_df = analyzer.compare_models()
 
-            model.fit(X_train, y_train)
-            y_pred = model.predict(X_test)
+    if results_df is not None:
+        best_model_name = results_df.index[0]
+        best_model_metrics = results_df.iloc[0]
 
-            metrics = analyze_regression_performance(y_test, y_pred, model_name)
-
-            results_summary.append({
-                'model': model_name,
-                'RMSE_CV': np.sqrt(-cv_scores['test_neg_mean_squared_error'].mean()),
-                'MAE_CV': -cv_scores['test_neg_mean_absolute_error'].mean(),
-                'R2_CV': cv_scores['test_r2'].mean(),
-                'RMSE_test': metrics['RMSE'],
-                'MAE_test': metrics['MAE'],
-                'R2_test': metrics['R2']
-            })
-
-            if hasattr(model, "feature_importances_"):
-                importance = model.feature_importances_
-                feature_names = X_train.columns
-                indices = np.argsort(importance)[-10:]
-
-                plt.figure(figsize=(10, 6))
-                plt.barh(range(len(indices)), importance[indices], align='center')
-                plt.yticks(range(len(indices)), [feature_names[i] for i in indices])
-                plt.title(f"Важность признаков: {model_name}")
-                plt.xlabel("Значимость")
-                plt.tight_layout()
-                plt.show()
-
-        except Exception as e:
-            print(f"Ошибка при обучении модели {model_name}: {e}")
-            continue
-
-    if results_summary:
-        results_df = pd.DataFrame(results_summary)
-        print("ИТОГИ ИССЛЕДОВАНИЯ РЕГРЕССИИ")
-        results_df = results_df.sort_values('R2_test', ascending=False)
-        print(results_df.round(4))
-
-        plt.figure(figsize=(12, 8))
-
-        models_list = results_df['model'].tolist()
-        r2_scores = results_df['R2_test'].tolist()
-        rmse_scores = results_df['RMSE_test'].tolist()
-
-        x_pos = np.arange(len(models_list))
-
-        plt.subplot(2, 1, 1)
-        bars = plt.bar(x_pos, r2_scores, alpha=0.7, color='skyblue')
-        plt.ylabel('R² Score (тест)')
-        plt.title('Сравнение моделей регрессии: R² Score')
-        plt.xticks(x_pos, models_list, rotation=45)
-
-        for bar, value in zip(bars, r2_scores):
-            plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.01,
-                     f'{value:.3f}', ha='center', va='bottom')
-
-        plt.subplot(2, 1, 2)
-        bars = plt.bar(x_pos, rmse_scores, alpha=0.7, color='lightcoral')
-        plt.ylabel('RMSE (тест)')
-        plt.title('Сравнение моделей регрессии: RMSE')
-        plt.xticks(x_pos, models_list, rotation=45)
-
-        for bar, value in zip(bars, rmse_scores):
-            plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.01,
-                     f'{value:.3f}', ha='center', va='bottom')
-
-        plt.tight_layout()
-        plt.show()
-
-    print("\nПроведение анализа по глубинам...")
-    perform_depth_analysis(data, models, target_column)
+        print(f"\nЛУЧШАЯ МОДЕЛЬ: {best_model_name}")
+        print(f"R²: {best_model_metrics['R2']:.4f}")
+        print(f"RMSE: {best_model_metrics['RMSE']:.4f}")
+        print(f"Общее время обучения всех моделей: {results_df['Train_Time'].sum():.2f}с")
 
 
 if __name__ == "__main__":
