@@ -1,0 +1,946 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.semanticweb.org/ontologies/aiDirectorDissertation"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://www.semanticweb.org/ontologies/aiDirectorDissertation">
+    <Prefix name="" IRI="http://www.semanticweb.org/ontologies/ai_director_dissertation#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Annotation>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <Literal xml:lang="ru">Онтология для диссертации по умному режиссеру в многопользовательских играх</Literal>
+    </Annotation>
+    <Declaration>
+        <Class abbreviatedIRI=":ДанныеДляАнализа"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":ДиссертационнаяРабота"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":ДобавлениеСобытий"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":ИгроваяСессия"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":ИгроваяСистема"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":Игрок"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":ИзменениеВИгре"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":ИзменениеПравил"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":ИзменениеСложности"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":Исследование"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":ЛогическаяСогласованность"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":МетодАнализаДанных"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":МетодИсследования"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":МетодМашинногоОбучения"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":МетодРазработкиИгр"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":МногопользовательскаяИгра"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":НавыкиИгроков"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":НаучнаяПроблема"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":ПоведениеИгроков"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":ПроблемаИгровогоМира"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":ПроблемаИгровогоПроцесса"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":ПроблемаТехнологий"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":СистемаАнализа"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":СистемаИзмененияМира"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":СистемаПринятияРешений"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":СогласованностьМира"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":СозданиеПрепятствий"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":СтилеваяСогласованность"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":СюжетнаяСогласованность"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":УмныйРежиссер"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":ЦельИсследования"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI=":ЭмоцииИгроков"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI=":анализирует"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI=":вноситИзменения"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI=":имеетЦель"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI=":используетМетод"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI=":принимаетРешение"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI=":решаетПроблему"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI=":сохраняетСогласованность"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI=":имеетДату"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI=":имеетОписание"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI=":имеетУровеньИнтереса"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI=":имеетУровеньНавыка"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI=":имеетУровеньСложности"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":Анализатор"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":ДобавитьСобытие"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":Игрок1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":Игрок2"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":ИзменитьПравила"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":ИзменятельМира"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":ЛогикаМира"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":МетодАнализа"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":МетодОбучения"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":МетодРазработки"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":МойРежиссер"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":МояДиссертация"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":НавыкиИгроков1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":ПринимательРешений"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":Проблема1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":Проблема2"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":Проблема3"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":СтильМира"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":СюжетМира"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":ТекущаяИгроваяСессия"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":УвеличитьСложность"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":Цель1"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual abbreviatedIRI=":ЭмоцииИгроков1"/>
+    </Declaration>
+    <Declaration>
+        <Datatype abbreviatedIRI="xsd:date"/>
+    </Declaration>
+    <SubClassOf>
+        <Class abbreviatedIRI=":ДиссертационнаяРабота"/>
+        <Class abbreviatedIRI=":Исследование"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":ДобавлениеСобытий"/>
+        <Class abbreviatedIRI=":ИзменениеВИгре"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":ИзменениеПравил"/>
+        <Class abbreviatedIRI=":ИзменениеВИгре"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":ИзменениеСложности"/>
+        <Class abbreviatedIRI=":ИзменениеВИгре"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":ЛогическаяСогласованность"/>
+        <Class abbreviatedIRI=":СогласованностьМира"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":МетодАнализаДанных"/>
+        <Class abbreviatedIRI=":МетодИсследования"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":МетодМашинногоОбучения"/>
+        <Class abbreviatedIRI=":МетодИсследования"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":МетодРазработкиИгр"/>
+        <Class abbreviatedIRI=":МетодИсследования"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":МногопользовательскаяИгра"/>
+        <Class abbreviatedIRI=":ИгроваяСистема"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":НавыкиИгроков"/>
+        <Class abbreviatedIRI=":ДанныеДляАнализа"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":ПоведениеИгроков"/>
+        <Class abbreviatedIRI=":ДанныеДляАнализа"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":ПроблемаИгровогоМира"/>
+        <Class abbreviatedIRI=":НаучнаяПроблема"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":ПроблемаИгровогоПроцесса"/>
+        <Class abbreviatedIRI=":НаучнаяПроблема"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":ПроблемаТехнологий"/>
+        <Class abbreviatedIRI=":НаучнаяПроблема"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":СистемаАнализа"/>
+        <Class abbreviatedIRI=":УмныйРежиссер"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":СистемаИзмененияМира"/>
+        <Class abbreviatedIRI=":УмныйРежиссер"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":СистемаПринятияРешений"/>
+        <Class abbreviatedIRI=":УмныйРежиссер"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":СозданиеПрепятствий"/>
+        <Class abbreviatedIRI=":ИзменениеВИгре"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":СтилеваяСогласованность"/>
+        <Class abbreviatedIRI=":СогласованностьМира"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":СюжетнаяСогласованность"/>
+        <Class abbreviatedIRI=":СогласованностьМира"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class abbreviatedIRI=":ЭмоцииИгроков"/>
+        <Class abbreviatedIRI=":ДанныеДляАнализа"/>
+    </SubClassOf>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":СистемаАнализа"/>
+        <NamedIndividual abbreviatedIRI=":Анализатор"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":ДобавлениеСобытий"/>
+        <NamedIndividual abbreviatedIRI=":ДобавитьСобытие"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":Игрок"/>
+        <NamedIndividual abbreviatedIRI=":Игрок1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":Игрок"/>
+        <NamedIndividual abbreviatedIRI=":Игрок2"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":ИзменениеПравил"/>
+        <NamedIndividual abbreviatedIRI=":ИзменитьПравила"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":СистемаИзмененияМира"/>
+        <NamedIndividual abbreviatedIRI=":ИзменятельМира"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":ЛогическаяСогласованность"/>
+        <NamedIndividual abbreviatedIRI=":ЛогикаМира"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":МетодАнализаДанных"/>
+        <NamedIndividual abbreviatedIRI=":МетодАнализа"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":МетодМашинногоОбучения"/>
+        <NamedIndividual abbreviatedIRI=":МетодОбучения"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":МетодРазработкиИгр"/>
+        <NamedIndividual abbreviatedIRI=":МетодРазработки"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":УмныйРежиссер"/>
+        <NamedIndividual abbreviatedIRI=":МойРежиссер"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":ДиссертационнаяРабота"/>
+        <NamedIndividual abbreviatedIRI=":МояДиссертация"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":НавыкиИгроков"/>
+        <NamedIndividual abbreviatedIRI=":НавыкиИгроков1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":СистемаПринятияРешений"/>
+        <NamedIndividual abbreviatedIRI=":ПринимательРешений"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":ПроблемаИгровогоПроцесса"/>
+        <NamedIndividual abbreviatedIRI=":Проблема1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":ПроблемаТехнологий"/>
+        <NamedIndividual abbreviatedIRI=":Проблема2"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":ПроблемаИгровогоМира"/>
+        <NamedIndividual abbreviatedIRI=":Проблема3"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":СтилеваяСогласованность"/>
+        <NamedIndividual abbreviatedIRI=":СтильМира"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":СюжетнаяСогласованность"/>
+        <NamedIndividual abbreviatedIRI=":СюжетМира"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":ИгроваяСессия"/>
+        <NamedIndividual abbreviatedIRI=":ТекущаяИгроваяСессия"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":ИзменениеСложности"/>
+        <NamedIndividual abbreviatedIRI=":УвеличитьСложность"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":ЦельИсследования"/>
+        <NamedIndividual abbreviatedIRI=":Цель1"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class abbreviatedIRI=":ЭмоцииИгроков"/>
+        <NamedIndividual abbreviatedIRI=":ЭмоцииИгроков1"/>
+    </ClassAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI=":анализирует"/>
+        <NamedIndividual abbreviatedIRI=":Анализатор"/>
+        <NamedIndividual abbreviatedIRI=":НавыкиИгроков1"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI=":анализирует"/>
+        <NamedIndividual abbreviatedIRI=":Анализатор"/>
+        <NamedIndividual abbreviatedIRI=":ЭмоцииИгроков1"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI=":вноситИзменения"/>
+        <NamedIndividual abbreviatedIRI=":ИзменятельМира"/>
+        <NamedIndividual abbreviatedIRI=":ТекущаяИгроваяСессия"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI=":сохраняетСогласованность"/>
+        <NamedIndividual abbreviatedIRI=":МойРежиссер"/>
+        <NamedIndividual abbreviatedIRI=":ЛогикаМира"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI=":сохраняетСогласованность"/>
+        <NamedIndividual abbreviatedIRI=":МойРежиссер"/>
+        <NamedIndividual abbreviatedIRI=":СтильМира"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI=":имеетЦель"/>
+        <NamedIndividual abbreviatedIRI=":МояДиссертация"/>
+        <NamedIndividual abbreviatedIRI=":Цель1"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI=":используетМетод"/>
+        <NamedIndividual abbreviatedIRI=":МояДиссертация"/>
+        <NamedIndividual abbreviatedIRI=":МетодАнализа"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI=":используетМетод"/>
+        <NamedIndividual abbreviatedIRI=":МояДиссертация"/>
+        <NamedIndividual abbreviatedIRI=":МетодОбучения"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI=":используетМетод"/>
+        <NamedIndividual abbreviatedIRI=":МояДиссертация"/>
+        <NamedIndividual abbreviatedIRI=":МетодРазработки"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI=":принимаетРешение"/>
+        <NamedIndividual abbreviatedIRI=":ПринимательРешений"/>
+        <NamedIndividual abbreviatedIRI=":ДобавитьСобытие"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI=":принимаетРешение"/>
+        <NamedIndividual abbreviatedIRI=":ПринимательРешений"/>
+        <NamedIndividual abbreviatedIRI=":УвеличитьСложность"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI=":решаетПроблему"/>
+        <NamedIndividual abbreviatedIRI=":Цель1"/>
+        <NamedIndividual abbreviatedIRI=":Проблема1"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI=":решаетПроблему"/>
+        <NamedIndividual abbreviatedIRI=":Цель1"/>
+        <NamedIndividual abbreviatedIRI=":Проблема2"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty abbreviatedIRI=":решаетПроблему"/>
+        <NamedIndividual abbreviatedIRI=":Цель1"/>
+        <NamedIndividual abbreviatedIRI=":Проблема3"/>
+    </ObjectPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty abbreviatedIRI=":имеетУровеньИнтереса"/>
+        <NamedIndividual abbreviatedIRI=":Игрок1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">78</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty abbreviatedIRI=":имеетУровеньНавыка"/>
+        <NamedIndividual abbreviatedIRI=":Игрок1"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">85</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty abbreviatedIRI=":имеетУровеньИнтереса"/>
+        <NamedIndividual abbreviatedIRI=":Игрок2"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">92</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty abbreviatedIRI=":имеетУровеньНавыка"/>
+        <NamedIndividual abbreviatedIRI=":Игрок2"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">45</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty abbreviatedIRI=":имеетДату"/>
+        <NamedIndividual abbreviatedIRI=":МояДиссертация"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#date">2025-12-31</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty abbreviatedIRI=":имеетОписание"/>
+        <NamedIndividual abbreviatedIRI=":Проблема1"/>
+        <Literal>Игроки быстро проходят игру и теряют интерес, потому что все события предсказуемы</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty abbreviatedIRI=":имеетУровеньСложности"/>
+        <NamedIndividual abbreviatedIRI=":Проблема1"/>
+        <Literal>высокий</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty abbreviatedIRI=":имеетОписание"/>
+        <NamedIndividual abbreviatedIRI=":Проблема2"/>
+        <Literal>Даже лучшие системы как в Left 4 Dead 2 работают по заранее заданным правилам</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty abbreviatedIRI=":имеетОписание"/>
+        <NamedIndividual abbreviatedIRI=":Проблема3"/>
+        <Literal>Когда игра меняется, она может стать нелогичной и запутанной для игроков</Literal>
+    </DataPropertyAssertion>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI=":анализирует"/>
+        <Class abbreviatedIRI=":СистемаАнализа"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI=":вноситИзменения"/>
+        <Class abbreviatedIRI=":СистемаИзмененияМира"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI=":имеетЦель"/>
+        <Class abbreviatedIRI=":ДиссертационнаяРабота"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI=":используетМетод"/>
+        <Class abbreviatedIRI=":ДиссертационнаяРабота"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI=":принимаетРешение"/>
+        <Class abbreviatedIRI=":СистемаПринятияРешений"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI=":решаетПроблему"/>
+        <Class abbreviatedIRI=":ЦельИсследования"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI=":сохраняетСогласованность"/>
+        <Class abbreviatedIRI=":УмныйРежиссер"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI=":анализирует"/>
+        <Class abbreviatedIRI=":ДанныеДляАнализа"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI=":вноситИзменения"/>
+        <Class abbreviatedIRI=":ИгроваяСессия"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI=":имеетЦель"/>
+        <Class abbreviatedIRI=":ЦельИсследования"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI=":используетМетод"/>
+        <Class abbreviatedIRI=":МетодИсследования"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI=":принимаетРешение"/>
+        <Class abbreviatedIRI=":ИзменениеВИгре"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI=":решаетПроблему"/>
+        <Class abbreviatedIRI=":НаучнаяПроблема"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI=":сохраняетСогласованность"/>
+        <Class abbreviatedIRI=":СогласованностьМира"/>
+    </ObjectPropertyRange>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI=":имеетДату"/>
+        <Class abbreviatedIRI=":ДиссертационнаяРабота"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI=":имеетУровеньИнтереса"/>
+        <Class abbreviatedIRI=":Игрок"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI=":имеетУровеньНавыка"/>
+        <Class abbreviatedIRI=":Игрок"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI=":имеетУровеньСложности"/>
+        <Class abbreviatedIRI=":НаучнаяПроблема"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI=":имеетДату"/>
+        <Datatype abbreviatedIRI="xsd:date"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI=":имеетОписание"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI=":имеетУровеньИнтереса"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI=":имеетУровеньНавыка"/>
+        <Datatype abbreviatedIRI="xsd:integer"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI=":имеетУровеньСложности"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:Анализатор</AbbreviatedIRI>
+        <Literal xml:lang="ru">Анализатор поведения игроков</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ДанныеДляАнализа</AbbreviatedIRI>
+        <Literal xml:lang="ru">Данные для анализа</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ДиссертационнаяРабота</AbbreviatedIRI>
+        <Literal xml:lang="ru">Диссертационная работа</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ДобавитьСобытие</AbbreviatedIRI>
+        <Literal xml:lang="ru">Добавить неожиданное событие в игру</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ДобавлениеСобытий</AbbreviatedIRI>
+        <Literal xml:lang="ru">Добавление событий</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ИгроваяСессия</AbbreviatedIRI>
+        <Literal xml:lang="ru">Игровая сессия</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ИгроваяСистема</AbbreviatedIRI>
+        <Literal xml:lang="ru">Игровая система</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:Игрок</AbbreviatedIRI>
+        <Literal xml:lang="ru">Игрок</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:Игрок1</AbbreviatedIRI>
+        <Literal xml:lang="ru">Игрок MidaW</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:Игрок2</AbbreviatedIRI>
+        <Literal xml:lang="ru">Игрок Harambe</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ИзменениеВИгре</AbbreviatedIRI>
+        <Literal xml:lang="ru">Изменение в игре</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ИзменениеПравил</AbbreviatedIRI>
+        <Literal xml:lang="ru">Изменение правил</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ИзменениеСложности</AbbreviatedIRI>
+        <Literal xml:lang="ru">Изменение сложности</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ИзменитьПравила</AbbreviatedIRI>
+        <Literal xml:lang="ru">Временно изменить правила игры</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ИзменятельМира</AbbreviatedIRI>
+        <Literal xml:lang="ru">Изменятель игрового мира</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:Исследование</AbbreviatedIRI>
+        <Literal xml:lang="ru">Исследование</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ЛогикаМира</AbbreviatedIRI>
+        <Literal xml:lang="ru">Логика игрового мира</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ЛогическаяСогласованность</AbbreviatedIRI>
+        <Literal xml:lang="ru">Логическая согласованность</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:МетодАнализа</AbbreviatedIRI>
+        <Literal xml:lang="ru">Анализ поведения игроков</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:МетодАнализаДанных</AbbreviatedIRI>
+        <Literal xml:lang="ru">Метод анализа данных</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:МетодИсследования</AbbreviatedIRI>
+        <Literal xml:lang="ru">Метод исследования</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:МетодМашинногоОбучения</AbbreviatedIRI>
+        <Literal xml:lang="ru">Метод машинного обучения</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:МетодОбучения</AbbreviatedIRI>
+        <Literal xml:lang="ru">Обучение с подкреплением для режиссера</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:МетодРазработки</AbbreviatedIRI>
+        <Literal xml:lang="ru">Создание прототипа игры для тестирования</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:МетодРазработкиИгр</AbbreviatedIRI>
+        <Literal xml:lang="ru">Метод разработки игр</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:МногопользовательскаяИгра</AbbreviatedIRI>
+        <Literal xml:lang="ru">Многопользовательская игра</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:МойРежиссер</AbbreviatedIRI>
+        <Literal xml:lang="ru">Умный режиссер GameMaster</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:МояДиссертация</AbbreviatedIRI>
+        <Literal xml:lang="ru">Создание умного режиссера для многопользовательских игр</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:НавыкиИгроков</AbbreviatedIRI>
+        <Literal xml:lang="ru">Навыки игроков</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:НавыкиИгроков1</AbbreviatedIRI>
+        <Literal xml:lang="ru">Навыки текущих игроков</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:НаучнаяПроблема</AbbreviatedIRI>
+        <Literal xml:lang="ru">Научная проблема</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ПоведениеИгроков</AbbreviatedIRI>
+        <Literal xml:lang="ru">Поведение игроков</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ПринимательРешений</AbbreviatedIRI>
+        <Literal xml:lang="ru">Мозг режиссера</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:Проблема1</AbbreviatedIRI>
+        <Literal xml:lang="ru">Игры становятся скучными после нескольких прохождений</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:Проблема2</AbbreviatedIRI>
+        <Literal xml:lang="ru">Существующие системы не умеют подстраиваться под игроков</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:Проблема3</AbbreviatedIRI>
+        <Literal xml:lang="ru">Изменения в игре нарушают логику мира</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ПроблемаИгровогоМира</AbbreviatedIRI>
+        <Literal xml:lang="ru">Проблема игрового мира</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ПроблемаИгровогоПроцесса</AbbreviatedIRI>
+        <Literal xml:lang="ru">Проблема игрового процесса</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ПроблемаТехнологий</AbbreviatedIRI>
+        <Literal xml:lang="ru">Проблема технологий</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:СистемаАнализа</AbbreviatedIRI>
+        <Literal xml:lang="ru">Система анализа</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:СистемаИзмененияМира</AbbreviatedIRI>
+        <Literal xml:lang="ru">Система изменения мира</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:СистемаПринятияРешений</AbbreviatedIRI>
+        <Literal xml:lang="ru">Система принятия решений</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:СогласованностьМира</AbbreviatedIRI>
+        <Literal xml:lang="ru">Согласованность мира</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:СозданиеПрепятствий</AbbreviatedIRI>
+        <Literal xml:lang="ru">Создание препятствий</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:СтилеваяСогласованность</AbbreviatedIRI>
+        <Literal xml:lang="ru">Стилевая согласованность</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:СтильМира</AbbreviatedIRI>
+        <Literal xml:lang="ru">Стиль и атмосфера мира</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:СюжетМира</AbbreviatedIRI>
+        <Literal xml:lang="ru">Сюжетная линия мира</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:СюжетнаяСогласованность</AbbreviatedIRI>
+        <Literal xml:lang="ru">Сюжетная согласованность</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ТекущаяИгроваяСессия</AbbreviatedIRI>
+        <Literal xml:lang="ru">Текущая игровая сессия</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:УвеличитьСложность</AbbreviatedIRI>
+        <Literal xml:lang="ru">Увеличить сложность для опытных игроков</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:УмныйРежиссер</AbbreviatedIRI>
+        <Literal xml:lang="ru">Умный режиссер</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:Цель1</AbbreviatedIRI>
+        <Literal xml:lang="ru">Создать систему умного режиссера для игр</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ЦельИсследования</AbbreviatedIRI>
+        <Literal xml:lang="ru">Цель исследования</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ЭмоцииИгроков</AbbreviatedIRI>
+        <Literal xml:lang="ru">Эмоции игроков</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:ЭмоцииИгроков1</AbbreviatedIRI>
+        <Literal xml:lang="ru">Эмоциональное состояние игроков</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:анализирует</AbbreviatedIRI>
+        <Literal xml:lang="ru">анализирует</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:вноситИзменения</AbbreviatedIRI>
+        <Literal xml:lang="ru">вносит изменения</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:имеетДату</AbbreviatedIRI>
+        <Literal xml:lang="ru">имеет дату</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:имеетОписание</AbbreviatedIRI>
+        <Literal xml:lang="ru">имеет описание</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:имеетУровеньИнтереса</AbbreviatedIRI>
+        <Literal xml:lang="ru">имеет уровень интереса</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:имеетУровеньНавыка</AbbreviatedIRI>
+        <Literal xml:lang="ru">имеет уровень навыка</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:имеетУровеньСложности</AbbreviatedIRI>
+        <Literal xml:lang="ru">имеет уровень сложности</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:имеетЦель</AbbreviatedIRI>
+        <Literal xml:lang="ru">имеет цель</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:используетМетод</AbbreviatedIRI>
+        <Literal xml:lang="ru">использует метод</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:принимаетРешение</AbbreviatedIRI>
+        <Literal xml:lang="ru">принимает решение</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:решаетПроблему</AbbreviatedIRI>
+        <Literal xml:lang="ru">решает проблему</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <AbbreviatedIRI>:сохраняетСогласованность</AbbreviatedIRI>
+        <Literal xml:lang="ru">сохраняет согласованность</Literal>
+    </AnnotationAssertion>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+
