@@ -1,6 +1,7 @@
 import numpy as np
 import random as rand
 import time
+from tqdm import tqdm
 
 n = 8
 chess_table = np.zeros((n, n), dtype=int)
@@ -143,17 +144,19 @@ def test_by_time(function):
     # print(f"Время выполнения {end_time - start_time:.6f}s")
     return eval_time
 
-def test_avg_time(function,steps = 100000):
-    time_sum =0
-    for i in range(steps):
+from tqdm import tqdm
+
+def test_avg_time(function, steps=1000, desc=""):
+    time_sum = 0
+    for i in tqdm(range(steps), desc=f"Тестирование {desc}", unit="итерация"):
         time_sum += test_by_time(function)
-    return time_sum/steps
+    return time_sum / steps
 
 def main():
     warmup_numpy()
-    print(f"Ср. время выполнения: {test_avg_time(brute_force_algo)}")
-    print(f"Ср. время выполнения: {test_avg_time(recursive_algo)}")
-    print(f"Ср. время выполнения: {test_avg_time(multi_agents_algo)}")
+    print(f"Ср. время выполнения brute_force: {test_avg_time(brute_force_algo, desc='brute_force')}")
+    print(f"Ср. время выполнения recursive: {test_avg_time(recursive_algo, desc='recursive')}")
+    print(f"Ср. время выполнения multi_agents: {test_avg_time(multi_agents_algo, desc='multi_agents')}")
 
 
 if __name__ == "__main__":
