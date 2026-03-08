@@ -81,7 +81,7 @@ namespace Checkers.Services
             var json = await SendMessageAsync("get_move", board, player);
             if (string.IsNullOrEmpty(json)) return null;
 
-            await UniTask.Delay(1000);
+            //await UniTask.Delay(1000);
 
             return DeserializeMove(json);
         }

@@ -1045,7 +1045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 287a81473cdd51240af94b0739a8345d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Checkers.Installers.GameRoot
-  _autoRestart: 0
+  _autoRestart: 1
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1413,8 +1413,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd147c769848807468077f7613f8cae2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Checkers.Views.BoardView
-  _cellPrefab: {fileID: 1076760832456697374, guid: 2518430dfb56d864da81cfbf2633da7a, type: 3}
-  _piecePrefab: {fileID: 4041407684655611893, guid: b9eb72fa5634f384eb8963bc3241a815, type: 3}
+  _cellPrefab: {fileID: 8990243358070547819, guid: d44847bc78919894ebeff0a41a481b0e, type: 3}
+  _piecePrefab: {fileID: 170605064584094183, guid: 7452a01d11d882f49bddc27ff03f8d47, type: 3}
   _boardContainer: {fileID: 1311491087}
   _cellSize: 1
 --- !u!1 &1841329974
@@ -1447,11 +1447,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Checkers.Installers.GameInstaller
   _tcpHost: 127.0.0.1
-  _tcpPort: 5556
+  _tcpPort: 5555
   WhitePlayer: 1
   WhitePlayerAIType: 2
   BlackPlayer: 1
-  BlackPlayerAIType: 1
+  BlackPlayerAIType: 2
 --- !u!4 &1841329976
 Transform:
   m_ObjectHideFlags: 0
