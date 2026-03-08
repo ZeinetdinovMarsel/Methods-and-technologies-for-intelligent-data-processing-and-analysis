@@ -171,3 +171,12 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+2 семестр/lab2/Checkers/Assets/Plugins/Zenject/Source/Providers/ComponentProviders/AddToGameObjectComponentProviders.meta
+2 семестр/lab2/Checkers/Assets/Plugins/Zenject/Source/Providers/ComponentProviders/AddToGameObjectComponentProviders/AddToCurrentProvider.cs.meta
+2 семестр/lab2/Checkers/Assets/Plugins/Zenject/Source/Providers/ComponentProviders/AddToGameObjectComponentProviders/AddToExistingGameObjectComponentProvider.cs.meta
+2 семестр/lab2/Checkers/Assets/Plugins/Zenject/Source/Providers/ComponentProviders/AddToGameObjectComponentProviders/AddToGameObjectComponentProviderBase.cs.meta
+2 семестр/lab2/Checkers/Assets/Plugins/Zenject/Source/Providers/ComponentProviders/AddToGameObjectComponentProviders/AddToNewGameObjectComponentProvider.cs.meta
+2 семестр/lab2/Checkers/Assets/Plugins/Zenject/Source/Providers/ComponentProviders/GetFromGameObjectCider.cs.meta
+2 семестр/lab2/Checkers/Assets/Plugins/Zenject/Source/Providers/ComponentProviders/GetFromGameObjectComponentProvider.cs.meta
+2 семестр/lab2/Checkers/Assets/Plugins/Zenject/Source/Providers/ComponentProviders/GetFromGameObonentProvider.cs.meta
+2 семестр/lab2/Checkers/Assets/Plugins/Zenject/Source/Providers/ComponentProviders/GetFromGameProvider.cs.meta
