@@ -38,7 +38,7 @@ os.makedirs(RUN_DIR, exist_ok=True)
 
 capture_piece_reward = 0.3
 king_piece_reward = 0.5
-win_reward = 1
+win_reward = 5
 lose_punishment = -5
 
 writer = SummaryWriter(RUN_DIR)

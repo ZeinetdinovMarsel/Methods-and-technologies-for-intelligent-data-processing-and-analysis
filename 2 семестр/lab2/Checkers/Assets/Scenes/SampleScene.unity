@@ -1447,9 +1447,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Checkers.Installers.GameInstaller
   _tcpHost: 127.0.0.1
-  _tcpPort: 5555
+  _tcpPort: 5556
   WhitePlayer: 1
-  WhitePlayerAIType: 2
+  WhitePlayerAIType: 1
   BlackPlayer: 1
   BlackPlayerAIType: 2
 --- !u!4 &1841329976
