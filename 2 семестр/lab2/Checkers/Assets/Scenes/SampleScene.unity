@@ -1045,7 +1045,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 287a81473cdd51240af94b0739a8345d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Checkers.Installers.GameRoot
-  _autoRestart: 1
+  _autoRestart: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,8 +1449,8 @@ MonoBehaviour:
   _tcpHost: 127.0.0.1
   _tcpPort: 5556
   WhitePlayer: 1
-  WhitePlayerAIType: 1
-  BlackPlayer: 1
+  WhitePlayerAIType: 2
+  BlackPlayer: 0
   BlackPlayerAIType: 2
 --- !u!4 &1841329976
 Transform:
