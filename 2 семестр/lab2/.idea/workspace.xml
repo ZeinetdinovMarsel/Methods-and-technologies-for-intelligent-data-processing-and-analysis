@@ -41,6 +41,7 @@
     "Python.main.executor": "Run",
     "Python.selfplay.executor": "Run",
     "Python.selfplay_train.executor": "Run",
+    "Python.test_model.executor": "Run",
     "Python.train_model.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",

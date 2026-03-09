@@ -36,8 +36,14 @@ RUN_DIR = "runs/checkers_safe"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 os.makedirs(RUN_DIR, exist_ok=True)
 
+capture_piece_reward = 0.3
+king_piece_reward = 0.5
+win_reward = 1
+lose_punishment = -5
+
+
 writer = SummaryWriter(RUN_DIR)
-torch.manual_seed(0)
+torch.cuda.manual_seed_all(0)
 np.random.seed(0)
 
 class Policy(nn.Module):
@@ -191,7 +197,7 @@ class PPOAgent:
         try:
             states = torch.from_numpy(np.vstack([s.copy() for s in states_np])).float().to(self.device)
         except Exception as e:
-            print("Error stacking states for update:", e)
+            print("Ошибка обновления с копии:", e)
             return
 
         actions = torch.tensor(actions_np, dtype=torch.long, device=self.device)
@@ -200,7 +206,7 @@ class PPOAgent:
         try:
             masks = torch.from_numpy(np.vstack([m.copy() for m in masks_np]).astype(np.bool_)).to(self.device)
         except Exception as e:
-            print("Warning stacking masks:", e)
+            print("Ошибка в составлении маски с копии:", e)
             masks = torch.ones((states.shape[0], ACTION_SPACE), dtype=torch.bool, device=self.device)
 
         values = list(values_np)
@@ -261,7 +267,6 @@ class PPOAgent:
                 torch.nn.utils.clip_grad_norm_(self.policy.parameters(), 0.5)
                 self.optimizer.step()
 
-        writer.add_scalar('train/batch_size', total_batch, self.step)
         writer.add_scalar('train/entropy_coef', entropy_coef, self.step)
         self.step += 1
 
@@ -269,7 +274,11 @@ class PPOAgent:
         if tag is None: tag = int(time.time())
         path = os.path.join(CHECKPOINT_DIR, f'ppo_{tag}.pth')
         with save_lock:
-            torch.save(self.policy.state_dict(), path)
+            torch.save({
+                'policy_state': self.policy.state_dict(),
+                'optimizer_state': self.optimizer.state_dict(),
+                'step': self.step
+            }, path)
             with open(os.path.join(CHECKPOINT_DIR, 'latest.txt'), 'w') as f:
                 f.write(os.path.basename(path))
         return path
@@ -282,7 +291,10 @@ class PPOAgent:
                     name = f.read().strip()
                 candidate = os.path.join(CHECKPOINT_DIR, name)
                 if os.path.exists(candidate):
-                    self.policy.load_state_dict(torch.load(candidate, map_location=self.device))
+                    checkpoint = torch.load(candidate, map_location=self.device)
+                    self.policy.load_state_dict(checkpoint['policy_state'])
+                    self.optimizer.load_state_dict(checkpoint['optimizer_state'])
+                    self.step = checkpoint.get('step', 0)
                     print("Загружен чекпоинт:", candidate)
             except Exception as e:
                 print("Ошибка при загрузке чекпоинта:", e)
@@ -349,10 +361,10 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
                         chosen_move, action_idx, logprob, value, mask_np = agent.select_action(state_np, legal_moves)
 
                         captured = chosen_move.get("captured",[]) or []
-                        step_reward = 0.3 * len(captured)
+                        step_reward = capture_piece_reward * len(captured)
 
                         if "kinged" in chosen_move and chosen_move.get("kinged"):
-                            step_reward += 0.5
+                            step_reward += king_piece_reward
 
                         with pending_lock:
                             pending = pending_episode_rewards.get(ep_id, 0.0)
@@ -371,18 +383,19 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
                             buffer.dones.append(False)
                             buffer.episode_ids.append(ep_id)
 
-                            if len(buffer.states) >= ROLLOUT_SIZE and not update_in_progress:
-                                update_in_progress = True
-                                states_copy = [s.copy() for s in buffer.states]
-                                actions_copy = buffer.actions[:]
-                                old_logprobs_copy = buffer.old_logprobs[:]
-                                values_copy = buffer.values[:]
-                                rewards_copy = buffer.rewards[:]
-                                masks_copy = [m.copy() for m in buffer.masks]
-                                dones_copy = buffer.dones[:]
-                                episode_ids_copy = buffer.episode_ids[:]
-                                buffer.clear()
-                                do_start_update = True
+                            with buffer_lock:
+                                if len(buffer.states) >= ROLLOUT_SIZE and not update_in_progress:
+                                    update_in_progress = True
+                                    states_copy = [s.copy() for s in buffer.states]
+                                    actions_copy = buffer.actions[:]
+                                    old_logprobs_copy = buffer.old_logprobs[:]
+                                    values_copy = buffer.values[:]
+                                    rewards_copy = buffer.rewards[:]
+                                    masks_copy = [m.copy() for m in buffer.masks]
+                                    dones_copy = buffer.dones[:]
+                                    episode_ids_copy = buffer.episode_ids[:]
+                                    buffer.clear()
+                                    do_start_update = True
 
                         if do_start_update:
                             def do_update(states_c, actions_c, old_lp_c, values_c, rewards_c, masks_c, dones_c, episode_ids_c):
@@ -399,7 +412,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
                                 finally:
                                     with buffer_lock:
                                         update_in_progress = False
-                                    print(f"Обновление завершено pid={pid}")
+                                        print(f"Обновление завершено pid={pid}")
 
                             threading.Thread(target=do_update, args=(states_copy, actions_copy, old_logprobs_copy,
                                                                      values_copy, rewards_copy, masks_copy,
@@ -415,11 +428,11 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
                         ep_id = str(uuid.uuid4())
 
                     if winner == player:
-                        reward_delta = 5.0
+                        reward_delta = win_reward
                     elif winner == "Draw":
                         reward_delta = 0.0
                     else:
-                        reward_delta = -5.0
+                        reward_delta = -lose_punishment
 
                     attached = False
                     with buffer_lock:
