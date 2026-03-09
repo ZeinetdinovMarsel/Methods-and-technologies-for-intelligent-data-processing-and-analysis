@@ -41,7 +41,6 @@ king_piece_reward = 0.5
 win_reward = 1
 lose_punishment = -5
 
-
 writer = SummaryWriter(RUN_DIR)
 torch.cuda.manual_seed_all(0)
 np.random.seed(0)
@@ -137,6 +136,10 @@ class PPOAgent:
         self.optimizer = optim.Adam(self.policy.parameters(), lr=LR)
         self.step = 0
         self.load_latest_checkpoint_if_any()
+        self.scheduler = torch.optim.lr_scheduler.LambdaLR(
+            self.optimizer,
+            lr_lambda=lambda step: 1 - step / 1_000_000
+        )
 
     def select_action(self, state_np, legal_moves):
         state = torch.from_numpy(state_np).float().unsqueeze(0).to(self.device)
@@ -266,6 +269,7 @@ class PPOAgent:
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(self.policy.parameters(), 0.5)
                 self.optimizer.step()
+                self.scheduler.step()
 
         writer.add_scalar('train/entropy_coef', entropy_coef, self.step)
         self.step += 1
