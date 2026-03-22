@@ -1,4 +1,3 @@
-using ArtificeToolkit.Attributes;
 using Checkers.Common;
 using Checkers.Core;
 using Checkers.Services;
@@ -6,75 +5,47 @@ using Checkers.Views;
 using UnityEngine;
 using Zenject;
 
-namespace Checkers.Installers
+public class GameInstaller : MonoInstaller
 {
-    public class GameInstaller : MonoInstaller
+    [SerializeField,InjectOptional] private GameSettings _settings;
+
+    public override void InstallBindings()
     {
-        [SerializeField] private string _tcpHost;
-        [SerializeField] private int _tcpPort;
+        Container.Bind<GameModel>().AsSingle().NonLazy();
+        Container.Bind<BoardModel>().AsSingle().NonLazy();
+        Container.Bind<IGameRulesService>().To<GameRulesService>().AsSingle();
 
-        [SerializeField] private PlayerControlType WhitePlayer = PlayerControlType.Human;
-        [EnableIf(nameof(IsWhitePlayerAI)), SerializeField]
-        private AIType WhitePlayerAIType = AIType.Random;
-
-        [SerializeField] private PlayerControlType BlackPlayer = PlayerControlType.AI;
-        [EnableIf(nameof(IsBlackPlayerAI)), SerializeField] 
-        private AIType BlackPlayerAIType = AIType.Random;
-
-        public override void InstallBindings()
-        {
-            Container.Bind<GameModel>().FromNew().AsSingle().NonLazy();
-            Container.Bind<BoardModel>().FromNew().AsSingle().NonLazy();
-
-            Container.Bind<IGameRulesService>().To<GameRulesService>().FromNew().AsSingle();
-
-
-            Container.Bind<IGameService>().To<GameService>().FromNew().AsSingle()
-                .OnInstantiated<GameService>((context, svc) =>
-                {
-                    svc.SetPlayers(WhitePlayer, BlackPlayer);
-                });
-
-            SetAI(ref WhitePlayerAIType, ref WhitePlayer, PlayerType.White);
-            SetAI(ref BlackPlayerAIType, ref BlackPlayer, PlayerType.Black);
-
-            Container.Bind<BoardView>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<UIView>().FromComponentInHierarchy().AsSingle();
-        }
-
-        private bool IsWhitePlayerAI() => WhitePlayer == PlayerControlType.AI;
-        private bool IsBlackPlayerAI() => BlackPlayer == PlayerControlType.AI;
-
-        private void SetAI(ref AIType AIType, ref PlayerControlType playerControl, PlayerType playerType)
-        {
-            if (playerControl != PlayerControlType.AI) { return; }
-
-            switch (AIType)
+        Container.Bind<IGameService>().To<GameService>().AsSingle()
+            .OnInstantiated<GameService>((context, svc) =>
             {
-                case AIType.Random:
-                    Container.Bind<IAIService>()
-                        .WithId(playerType)
-                        .To<RandomAIService>()
-                        .FromNew()
-                        .AsCached();
-                    break;
-                case AIType.MinimaxAlphaBeta:
-                    Container.Bind<IAIService>()
-                        .WithId(playerType)
-                        .To<MinimaxAlphaBetaAIService>()
-                        .FromNew()
-                        .AsCached();
-                    break;
-                case AIType.RL:
-                    Container.Bind<IAIService>()
-                        .WithId(playerType)
-                        .To<ReinforcementLearningAIService>()
-                        .FromNew()
-                        .AsCached()
-                        .WithArguments(_tcpHost, _tcpPort);
-                    break;
-            }
+                svc.SetPlayers(_settings.WhitePlayer, _settings.BlackPlayer);
+            });
 
+        BindAI(_settings.WhitePlayerAIType, _settings.WhitePlayer, PlayerType.White);
+        BindAI(_settings.BlackPlayerAIType, _settings.BlackPlayer, PlayerType.Black);
+
+        Container.Bind<BoardView>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<UIView>().FromComponentInHierarchy().AsSingle();
+    }
+
+    private void BindAI(AIType aiType, PlayerControlType controlType, PlayerType playerType)
+    {
+        if (controlType != PlayerControlType.AI) return;
+
+        var binding = Container.Bind<IAIService>().WithId(playerType);
+
+        switch (aiType)
+        {
+            case AIType.Random:
+                binding.To<RandomAIService>().AsCached();
+                break;
+            case AIType.MinimaxAlphaBeta:
+                binding.To<MinimaxAlphaBetaAIService>().AsCached();
+                break;
+            case AIType.RL:
+                binding.To<ReinforcementLearningAIService>().AsCached()
+                       .WithArguments(_settings.TcpHost, _settings.TcpPort);
+                break;
         }
     }
 }

@@ -22,6 +22,10 @@ MonoBehaviour:
       Value: 1
     - Key: SampleScene
       Value: 1
+    - Key: MenuScene
+      Value: 1
+    - Key: GameScene
+      Value: 1
   validatorTypesMap:
     list:
     - Key: Artifice_ValidatorModule_ScriptableObject_NullReferenceChecker

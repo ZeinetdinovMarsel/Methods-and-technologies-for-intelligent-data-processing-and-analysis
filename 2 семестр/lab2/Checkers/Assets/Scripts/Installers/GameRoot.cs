@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using UniRx;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Checkers.Installers
@@ -79,7 +80,7 @@ namespace Checkers.Installers
                 .AddTo(_disposables);
 
             _uiView.OnQuitClicked
-                .Subscribe(_ => Application.Quit())
+                .Subscribe(_ => SceneManager.LoadScene("MenuScene"))
                 .AddTo(_disposables);
 
             _gameModel.LastMove
